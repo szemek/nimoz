@@ -33,9 +33,9 @@ class Parser
 
   def extract_name(name)
     begin
-      name.css('strong').first.content
+      { name: name.css('strong').first.content }
     rescue NoMethodError
-      ""
+      { name: "" }
     end
   end
 
@@ -62,11 +62,6 @@ class Parser
   def extract_museum(cells)
     name, location, address, extra = cells
 
-    {
-      name: extract_name(name),
-      location: extract_location(location),
-      address: address,
-      extra: extra
-    }
+    extract_name(name).merge(extract_location(location))
   end
 end

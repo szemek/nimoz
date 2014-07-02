@@ -8,12 +8,13 @@ require 'colored'
 
 require_relative 'parser'
 
-def page_url(page)
-  base_url = 'http://nimoz.pl/pl/bazy-danych/wykaz-muzeow-w-polsce/baza-muzeow-w-polsce'
-
-  "#{base_url}?page=#{page}"
+def base_url
+  'http://nimoz.pl/pl/bazy-danych/wykaz-muzeow-w-polsce/baza-muzeow-w-polsce'
 end
 
+def page_url(page)
+  "#{base_url}?page=#{page}"
+end
 
 from_page = 1
 to_page = 18
@@ -25,3 +26,13 @@ museums = []
   museums << Parser.new(doc).extract_data
 end
 
+museums.flatten!
+
+museums.each do |museum|
+  if museum[:name]
+    puts museum[:name].blue
+    puts museum[:voivodeship]
+    puts museum[:district]
+    puts museum[:commune]
+  end
+end
