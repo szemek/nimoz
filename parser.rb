@@ -59,9 +59,34 @@ class Parser
     }
   end
 
+  def extract_emails(address)
+    emails = address.css("a[href^='mailto']").map(&:content)
+
+    if emails.present?
+      {emails: emails}
+    else
+      {}
+    end
+  end
+
+  def extract_webpages(address)
+    webpages = address.css("a[href^='http']").map(&:content)
+
+    if webpages.present?
+      {webpages: webpages}
+    else
+      {}
+    end
+  end
+
   def extract_museum(cells)
     name, location, address, extra = cells
 
-    extract_name(name).merge(extract_location(location))
+    museum = extract_name(name)
+      .merge(extract_location(location))
+      .merge(extract_emails(address))
+      .merge(extract_webpages(address))
+
+    museum
   end
 end
