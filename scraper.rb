@@ -34,5 +34,7 @@ museums.each do |museum|
     puts museum[:voivodeship]
     puts museum[:district]
     puts museum[:commune]
+    puts museum[:emails]
+    puts museum[:webpages]
   end
 end
