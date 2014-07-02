@@ -79,6 +79,18 @@ class Parser
     end
   end
 
+  def extract_phones(address)
+    phones = address.enum_for(:traverse).select do |element|
+      element.is_a?(Nokogiri::XML::Text) && element.content.include?("tel")
+    end.map(&:content).map(&:strip)
+
+    if phones.present?
+      {phones: phones}
+    else
+      {}
+    end
+  end
+
   def extract_museum(cells)
     name, location, address, extra = cells
 
@@ -86,6 +98,7 @@ class Parser
       .merge(extract_location(location))
       .merge(extract_emails(address))
       .merge(extract_webpages(address))
+      .merge(extract_phones(address))
 
     museum
   end

@@ -5,6 +5,7 @@ require 'csv'
 require 'active_support'
 require 'active_support/core_ext/object'
 require 'colored'
+require 'enumerator'
 
 require_relative 'parser'
 
@@ -36,5 +37,6 @@ museums.each do |museum|
     puts museum[:commune]
     puts museum[:emails]
     puts museum[:webpages]
+    puts museum[:phones]
   end
 end
