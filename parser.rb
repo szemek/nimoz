@@ -91,43 +91,30 @@ class Parser
     end
   end
 
-  def extract_director(extra)
+  def extract_from_extra(extra, phrase, key)
     element = extra.children.select do |element|
-      element.content.downcase.include?("dyrektor")
+      element.content.downcase.include?(phrase)
     end.first
 
+    hash = {}
+
     if element.present?
-      director = element.next_sibling.next_sibling.content
-      {director: director}
-    else
-      {}
+      hash[key] = element.next_sibling.next_sibling.content
     end
+
+    hash
+  end
+
+  def extract_director(extra)
+    extract_from_extra(extra, 'dyrektor', :director)
   end
 
   def extract_organizer(extra)
-    element = extra.children.select do |element|
-      element.content.downcase.include?("organizator")
-    end.first
-
-    if element.present?
-      organizer = element.next_sibling.next_sibling.content
-      {organizer: organizer}
-    else
-      {}
-    end
+    extract_from_extra(extra, 'organizator', :organizer)
   end
 
   def extract_status(extra)
-    element = extra.children.select do |element|
-      element.content.downcase.include?("status")
-    end.first
-
-    if element.present?
-      status = element.next_sibling.next_sibling.content
-      {status: status}
-    else
-      {}
-    end
+    extract_from_extra(extra, 'status', :status)
   end
 
   def extract_museum(cells)
