@@ -8,6 +8,7 @@ require 'colored'
 require 'enumerator'
 
 require_relative 'parser'
+require_relative 'exporter'
 
 def base_url
   'http://nimoz.pl/pl/bazy-danych/wykaz-muzeow-w-polsce/baza-muzeow-w-polsce'
@@ -45,3 +46,20 @@ museums.each do |museum|
     puts museum[:number]
   end
 end
+
+fields = [
+  :name,
+  :voivodeship,
+  :district,
+  :commune,
+  :emails,
+  :webpages,
+  :phones,
+  :director,
+  :organizer,
+  :status,
+  :registered,
+  :number
+]
+
+puts(Exporter.new(museums, fields).to_csv)
