@@ -39,5 +39,7 @@ museums.each do |museum|
     puts museum[:webpages]
     puts museum[:phones]
     puts museum[:director]
+    puts museum[:organizer]
+    puts museum[:status]
   end
 end
