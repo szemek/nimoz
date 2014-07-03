@@ -91,6 +91,19 @@ class Parser
     end
   end
 
+  def extract_director(extra)
+    element = extra.children.select do |element|
+      element.content.downcase.include?("dyrektor")
+    end.first
+
+    if element.present?
+      director = element.next_sibling.next_sibling.content
+      {director: director}
+    else
+      {}
+    end
+  end
+
   def extract_museum(cells)
     name, location, address, extra = cells
 
@@ -99,6 +112,7 @@ class Parser
       .merge(extract_emails(address))
       .merge(extract_webpages(address))
       .merge(extract_phones(address))
+      .merge(extract_director(extra))
 
     museum
   end
