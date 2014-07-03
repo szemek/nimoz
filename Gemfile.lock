@@ -1,7 +1,7 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    activesupport (4.1.1)
+    activesupport (4.1.4)
       i18n (~> 0.6, >= 0.6.9)
       json (~> 1.7, >= 1.7.7)
       minitest (~> 5.1)
@@ -13,16 +13,16 @@ GEM
     json (1.8.1)
     method_source (0.8.2)
     mini_portile (0.6.0)
-    minitest (5.3.4)
+    minitest (5.3.5)
     nokogiri (1.6.2.1)
       mini_portile (= 0.6.0)
-    pry (0.9.12.6)
-      coderay (~> 1.0)
-      method_source (~> 0.8)
+    pry (0.10.0)
+      coderay (~> 1.1.0)
+      method_source (~> 0.8.1)
       slop (~> 3.4)
     slop (3.5.0)
-    thread_safe (0.3.3)
-    tzinfo (1.2.0)
+    thread_safe (0.3.4)
+    tzinfo (1.2.1)
       thread_safe (~> 0.1)
 
 PLATFORMS
