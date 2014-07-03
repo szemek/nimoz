@@ -6,6 +6,7 @@ require 'active_support'
 require 'active_support/core_ext/object'
 require 'colored'
 require 'enumerator'
+require 'awesome_print'
 
 require_relative 'parser'
 require_relative 'exporter'
@@ -32,18 +33,7 @@ museums.flatten!
 
 museums.each do |museum|
   if museum[:name]
-    puts museum[:name].blue
-    puts museum[:voivodeship]
-    puts museum[:district]
-    puts museum[:commune]
-    puts museum[:emails]
-    puts museum[:webpages]
-    puts museum[:phones]
-    puts museum[:director]
-    puts museum[:organizer]
-    puts museum[:status]
-    puts museum[:registered]
-    puts museum[:number]
+    ap museum
   end
 end
 
@@ -62,4 +52,6 @@ fields = [
   :number
 ]
 
-puts(Exporter.new(museums, fields).to_csv)
+csv = File.open('museums.csv', 'w')
+csv.write(Exporter.new(museums, fields).to_csv)
+csv.close
