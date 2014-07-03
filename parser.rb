@@ -60,7 +60,7 @@ class Parser
   end
 
   def extract_emails(address)
-    emails = address.css("a[href^='mailto']").map(&:content)
+    emails = address.css("a[href^='mailto']").map(&:content).join(', ')
 
     if emails.present?
       {emails: emails}
@@ -70,7 +70,7 @@ class Parser
   end
 
   def extract_webpages(address)
-    webpages = address.css("a[href^='http']").map(&:content)
+    webpages = address.css("a[href^='http']").map(&:content).join(', ')
 
     if webpages.present?
       {webpages: webpages}
@@ -82,7 +82,7 @@ class Parser
   def extract_phones(address)
     phones = address.enum_for(:traverse).select do |element|
       element.is_a?(Nokogiri::XML::Text) && element.content.include?("tel")
-    end.map(&:content).map(&:strip)
+    end.map(&:content).map(&:strip).join(', ').gsub('tel.', '').gsub(';', ',')
 
     if phones.present?
       {phones: phones}
