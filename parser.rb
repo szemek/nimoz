@@ -117,6 +117,14 @@ class Parser
     extract_from_extra(extra, 'status', :status)
   end
 
+  def extract_registered(extra)
+    extract_from_extra(extra, 'wpisane', :registered)
+  end
+
+  def extract_number(extra)
+    extract_from_extra(extra, 'numer', :number)
+  end
+
   def extract_museum(cells)
     name, location, address, extra = cells
 
@@ -128,6 +136,8 @@ class Parser
       .merge(extract_director(extra))
       .merge(extract_organizer(extra))
       .merge(extract_status(extra))
+      .merge(extract_registered(extra))
+      .merge(extract_number(extra))
 
     museum
   end
