@@ -41,5 +41,7 @@ museums.each do |museum|
     puts museum[:director]
     puts museum[:organizer]
     puts museum[:status]
+    puts museum[:registered]
+    puts museum[:number]
   end
 end
