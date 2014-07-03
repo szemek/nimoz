@@ -104,6 +104,32 @@ class Parser
     end
   end
 
+  def extract_organizer(extra)
+    element = extra.children.select do |element|
+      element.content.downcase.include?("organizator")
+    end.first
+
+    if element.present?
+      organizer = element.next_sibling.next_sibling.content
+      {organizer: organizer}
+    else
+      {}
+    end
+  end
+
+  def extract_status(extra)
+    element = extra.children.select do |element|
+      element.content.downcase.include?("status")
+    end.first
+
+    if element.present?
+      status = element.next_sibling.next_sibling.content
+      {status: status}
+    else
+      {}
+    end
+  end
+
   def extract_museum(cells)
     name, location, address, extra = cells
 
@@ -113,6 +139,8 @@ class Parser
       .merge(extract_webpages(address))
       .merge(extract_phones(address))
       .merge(extract_director(extra))
+      .merge(extract_organizer(extra))
+      .merge(extract_status(extra))
 
     museum
   end
