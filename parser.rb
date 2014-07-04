@@ -12,7 +12,7 @@ class Parser
       cells = row.css('td')
 
       case cells.count
-      when 3 then data << extract_department(cells)
+      when 3 then next
       when 4 then data << extract_museum(cells)
       else next
       end
@@ -82,10 +82,21 @@ class Parser
   def extract_phones(address)
     phones = address.enum_for(:traverse).select do |element|
       element.is_a?(Nokogiri::XML::Text) && element.content.include?("tel")
-    end.map(&:content).map(&:strip).join(', ').gsub('tel.', '').gsub(';', ',')
+    end.map(&:content).map(&:strip).join(', ').gsub('tel.', '').gsub(';', ',').strip
 
     if phones.present?
       {phones: phones}
+    else
+      {}
+    end
+  end
+
+  def extract_address(address)
+    element = address.css('strong').first.try(:next_sibling).try(:next_sibling)
+
+    if element.present?
+      address = element.content.strip.gsub(/\s\s+/, ', ')
+      {address: address}
     else
       {}
     end
@@ -133,6 +144,7 @@ class Parser
       .merge(extract_emails(address))
       .merge(extract_webpages(address))
       .merge(extract_phones(address))
+      .merge(extract_address(address))
       .merge(extract_director(extra))
       .merge(extract_organizer(extra))
       .merge(extract_status(extra))
